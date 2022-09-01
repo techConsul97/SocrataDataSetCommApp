@@ -9,6 +9,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
 
 import java.io.IOException
 import java.util.concurrent.CancellationException
@@ -30,7 +31,6 @@ class GetSchoolsUseCase @Inject constructor(
                     response.body()?.let { list ->
                         emit(Resource.Success(list.map { it.toSchoolModel() }))
                     }
-
                 }
                 if(!response.isSuccessful){
                     val errorCode = response.code()
@@ -47,7 +47,6 @@ class GetSchoolsUseCase @Inject constructor(
             val cause = e.cause.toString()
             emit(Resource.Error(ErrorTypes.JobCancellationError(cause)))
         }
-
 
     }
 
