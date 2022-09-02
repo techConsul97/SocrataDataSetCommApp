@@ -28,8 +28,12 @@ class GetSchoolsUseCase @Inject constructor(
                     schoolsRepository.getSchoolsFromApi()
                 }.await()
                 if (response.isSuccessful) {
-                    response.body()?.let { list ->
-                        emit(Resource.Success(list.map { it.toSchoolModel() }))
+                    if(response.body()!=null) {
+                        response.body()?.let { list ->
+                            emit(Resource.Success(list.map { it.toSchoolModel() }))
+                        }
+                    }else{
+                        emit(Resource.Error(ErrorTypes.EmptyQuery()))
                     }
                 }
                 if(!response.isSuccessful){
