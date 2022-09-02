@@ -3,6 +3,7 @@ package com.sebqv97.socratadatasetapiapp.feature_schools.presentation.get_school
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -32,7 +33,13 @@ fun SchoolElement(modifier: Modifier,school:SchoolModel,onSchoolClicked:(String)
                 .padding(8.dp)
 
         ) {
-            Text(text = school.schoolName!!,fontSize = 16.sp, fontWeight = FontWeight.W500, fontStyle = FontStyle.Italic, textAlign = TextAlign.Start, textDecoration = TextDecoration.Underline)
+            if(school.schoolName != null)
+            {
+                Text(text = school.schoolName,fontSize = 16.sp, fontWeight = FontWeight.W500, fontStyle = FontStyle.Italic, textAlign = TextAlign.Start, textDecoration = TextDecoration.Underline)
+
+            }else{
+                Text(text = "Error!",fontSize = 24.sp, fontWeight = FontWeight.W900, textAlign = TextAlign.Center)
+            }
         }
 
     }
