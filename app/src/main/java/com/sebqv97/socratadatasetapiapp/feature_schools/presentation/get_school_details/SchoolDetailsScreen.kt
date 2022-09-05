@@ -1,28 +1,34 @@
 package com.sebqv97.socratadatasetapiapp.feature_schools.presentation.get_school_details
 
 import android.widget.Space
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.sebqv97.socratadatasetapiapp.feature_schools.presentation.Screens
 import com.sebqv97.socratadatasetapiapp.feature_schools.util.getWordsUseCaseErrorHandler
 
 
 @Composable
-fun SchoolDetailsScreen(modifier: Modifier, viewModel: SchoolDetailsViewModel = hiltViewModel()) {
+fun SchoolDetailsScreen(modifier: Modifier, viewModel: SchoolDetailsViewModel = hiltViewModel(),navController: NavController) {
     val state = viewModel.getSchoolDetailsState.value
     val school = state.schoolDetails
+Column() {
+    UserAppBar(modifier = modifier, navController = navController)
 
     Box(
         modifier = modifier
@@ -119,6 +125,31 @@ fun SchoolDetailsScreen(modifier: Modifier, viewModel: SchoolDetailsViewModel = 
             CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
 
         }
+
+    }
+}
+
+
+}
+
+@Composable
+fun UserAppBar(modifier: Modifier, navController: NavController) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier
+            .background(color = MaterialTheme.colors.primaryVariant)
+            .fillMaxWidth()
+    ) {
+        IconButton(onClick = { navController.navigate(Screens.SchoolsScreen.route) }) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Go back to Main Screen Icon",
+                tint = Color.White,
+                modifier = modifier.align(CenterVertically)
+            )
+
+        }
+
 
     }
 

@@ -6,8 +6,6 @@ import com.sebqv97.socratadatasetapiapp.feature_schools.data.remote.SchoolsApi
 import com.sebqv97.socratadatasetapiapp.feature_schools.data.repository.SchoolsRepositoryImpl
 import com.sebqv97.socratadatasetapiapp.feature_schools.domain.repository.SchoolsRepository
 import com.sebqv97.socratadatasetapiapp.feature_schools.domain.use_case.GetSchoolDetailsUseCase
-import com.sebqv97.socratadatasetapiapp.feature_schools.domain.use_case.GetSchoolsUseCase
-import com.sebqv97.socratadatasetapiapp.feature_schools.presentation.get_schools.SchoolsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -15,7 +13,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -24,8 +22,8 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class SchoolDetailsViewModelTest{
-    private  var schoolsViewModel: SchoolDetailsViewModel? = null
+class SchoolDetailsViewModelTest {
+    private var schoolsViewModel: SchoolDetailsViewModel? = null
     private var schoolsRepository: SchoolsRepository? = null
     private var getSchoolsUseCase: GetSchoolDetailsUseCase? = null
 
@@ -38,7 +36,6 @@ class SchoolDetailsViewModelTest{
     @get:Rule
 //tell the application to run the tests INSTANTLY, HIGH PRIORITY
     val rule: TestRule = InstantTaskExecutorRule()
-
 
 
     @Before
@@ -60,10 +57,13 @@ class SchoolDetailsViewModelTest{
     }
 
     @Test
-    fun `confirm first state is loading`(){
+    fun `confirm first state is loading`() {
         runBlocking {
-            schoolsViewModel = SchoolDetailsViewModel(getSchoolsUseCase!!, savedStateHandle = SavedStateHandle(
-                mapOf("dbn" to "seba")))
+            schoolsViewModel = SchoolDetailsViewModel(
+                getSchoolsUseCase!!, savedStateHandle = SavedStateHandle(
+                    mapOf("dbn" to "seba")
+                )
+            )
             val state = schoolsViewModel!!.getSchoolDetailsState.value
             assertTrue(state.isLoading)
         }
